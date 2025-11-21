@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://chjw2fx4drx5f"]
+
+[ext_resource type="FontFile" uid="uid://dsqnbb1c268fu" path="res://04B_11__.TTF" id="1_f3sb7"]
+
+[sub_resource type="Theme" id="Theme_fj7yv"]
+default_font = ExtResource("1_f3sb7")
+default_font_size = 8
+
+[node name="world" type="Node2D"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 256.0
+offset_bottom = 144.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+texture_filter = 1
+offset_right = 256.0
+offset_bottom = 23.0
+theme = SubResource("Theme_fj7yv")
+text = "bleh"
