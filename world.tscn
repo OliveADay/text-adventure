@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://chjw2fx4drx5f"]
+[gd_scene load_steps=5 format=3 uid="uid://chjw2fx4drx5f"]
 
 [ext_resource type="FontFile" uid="uid://dsqnbb1c268fu" path="res://04B_11__.TTF" id="1_f3sb7"]
 [ext_resource type="Script" uid="uid://ctvhqff62lgl4" path="res://consolelike.gd" id="2_fj7yv"]
+[ext_resource type="Script" uid="uid://dm7qoix4ysssx" path="res://prompt.gd" id="3_tlwt5"]
 
 [sub_resource type="Theme" id="Theme_fj7yv"]
 default_font = ExtResource("1_f3sb7")
@@ -14,10 +15,23 @@ offset_right = 256.0
 offset_bottom = 144.0
 color = Color(0, 0, 0, 1)
 
-[node name="Label" type="Label" parent="."]
+[node name="textbit" type="Label" parent="."]
 texture_filter = 1
 offset_right = 256.0
-offset_bottom = 23.0
+offset_bottom = 8.0
 theme = SubResource("Theme_fj7yv")
-text = "bleh"
+text = "bleh bleh bleh bleh "
+autowrap_mode = 2
 script = ExtResource("2_fj7yv")
+
+[node name="prompt" type="Label" parent="textbit"]
+visible = false
+texture_filter = 1
+layout_mode = 0
+offset_top = 25.0
+offset_right = 256.0
+offset_bottom = 33.0
+theme = SubResource("Theme_fj7yv")
+text = "Continue: enter "
+autowrap_mode = 2
+script = ExtResource("3_tlwt5")
