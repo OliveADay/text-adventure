@@ -6,6 +6,12 @@ var words = []
 @export var cooldown_max = 0.05
 var cooldown_current = 0
 var index = 0
+@export var by_word = false
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("enter"):
+		index = words.size()
+		text = mainbit
 
 func seperate_by_spaces(str):
 	var words = []
@@ -18,14 +24,26 @@ func seperate_by_spaces(str):
 			word+=char
 	return words
 	
+func seperate_by_chars(str):
+	var characters= []
+	for char in str:
+		characters.append(char)
+	return characters
 func _ready() -> void:
 	mainbit = text
 	text = ""
-	words = seperate_by_spaces(mainbit)
+	if by_word:
+		words = seperate_by_spaces(mainbit)
+	else:
+		words = seperate_by_chars(mainbit)
+	
 
 func _process(delta: float) -> void:
 	if cooldown_current <= 0 and index<words.size():
-		text += words[index]+" "
+		if by_word:
+			text += words[index]+" "
+		else:
+			text+=words[index]
 		index+=1
 		cooldown_current = cooldown_max
 	elif cooldown_current > 0:

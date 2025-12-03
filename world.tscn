@@ -23,9 +23,32 @@ theme = SubResource("Theme_fj7yv")
 text = "you find yourself in a dark and damp pit, one in which you can only smell mold and wet concrete, you hear a large splash, and then a light. "
 autowrap_mode = 2
 script = ExtResource("2_fj7yv")
-cooldown_max = 0.3
+cooldown_max = 0.03
 
 [node name="prompt" type="Label" parent="textbit"]
+visible = false
+texture_filter = 1
+layout_mode = 0
+offset_top = 25.0
+offset_right = 256.0
+offset_bottom = 33.0
+theme = SubResource("Theme_fj7yv")
+text = "Continue: enter "
+autowrap_mode = 2
+script = ExtResource("3_tlwt5")
+
+[node name="name" type="Label" parent="."]
+visible = false
+texture_filter = 1
+offset_right = 256.0
+offset_bottom = 8.0
+theme = SubResource("Theme_fj7yv")
+text = "you find yourself in a dark and damp pit, one in which you can only smell mold and wet concrete, you hear a large splash, and then a light. "
+autowrap_mode = 2
+script = ExtResource("2_fj7yv")
+cooldown_max = 0.3
+
+[node name="prompt" type="Label" parent="name"]
 visible = false
 texture_filter = 1
 layout_mode = 0
