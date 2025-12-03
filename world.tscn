@@ -13,9 +13,10 @@ default_font_size = 8
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 256.0
 offset_bottom = 144.0
-color = Color(0.23468602, 0.19342127, 0.13939087, 1)
+color = Color(0, 0, 0, 1)
 
-[node name="textbit" type="Label" parent="." node_paths=PackedStringArray("next_text")]
+[node name="textbit" type="Label" parent="." node_paths=PackedStringArray("next_text", "next_prompt")]
+visible = false
 texture_filter = 1
 offset_right = 256.0
 offset_bottom = 8.0
@@ -24,7 +25,8 @@ text = "you find yourself in a dark and damp pit, one in which you can only smel
 autowrap_mode = 2
 script = ExtResource("2_fj7yv")
 cooldown_max = 0.03
-next_text = NodePath("../name")
+next_text = NodePath("../child")
+next_prompt = NodePath("prompt")
 
 [node name="prompt" type="Label" parent="textbit"]
 visible = false
@@ -38,7 +40,7 @@ text = "Continue: enter "
 autowrap_mode = 2
 script = ExtResource("3_tlwt5")
 
-[node name="name" type="Label" parent="."]
+[node name="child" type="Label" parent="." node_paths=PackedStringArray("next_text", "next_prompt")]
 visible = false
 texture_filter = 1
 offset_right = 256.0
@@ -50,8 +52,10 @@ text = "oh child how did you get down here? Let me bring you somewhere more cosy
 autowrap_mode = 2
 script = ExtResource("2_fj7yv")
 cooldown_max = 0.04
+next_text = NodePath("../narrator_2")
+next_prompt = NodePath("prompt")
 
-[node name="prompt" type="Label" parent="name"]
+[node name="prompt" type="Label" parent="child"]
 visible = false
 texture_filter = 1
 layout_mode = 0
@@ -63,4 +67,73 @@ text = "Continue: enter "
 autowrap_mode = 2
 script = ExtResource("3_tlwt5")
 
+[node name="narrator_2" type="Label" parent="." node_paths=PackedStringArray("next_text", "next_prompt")]
+visible = false
+texture_filter = 1
+offset_right = 256.0
+offset_bottom = 8.0
+theme = SubResource("Theme_fj7yv")
+text = "you are suddenly within a cosy home. You can feel the distant warmth of a fire and smell the warm funk that you associate with your grandparents house. @@@@@@@@@@@@@@There is a commotion going on that you can't entirely make out...@@@@@@@@@"
+autowrap_mode = 2
+script = ExtResource("2_fj7yv")
+cooldown_max = 0.03
+next_text = NodePath("../commotion")
+next_prompt = NodePath("prompt")
+
+[node name="prompt" type="Label" parent="narrator_2"]
+visible = false
+texture_filter = 1
+layout_mode = 0
+offset_top = 25.0
+offset_right = 256.0
+offset_bottom = 33.0
+theme = SubResource("Theme_fj7yv")
+text = "Continue: enter "
+autowrap_mode = 2
+script = ExtResource("3_tlwt5")
+
+[node name="commotion" type="Label" parent="."]
+texture_filter = 1
+offset_right = 256.0
+offset_bottom = 8.0
+theme = SubResource("Theme_fj7yv")
+theme_override_colors/font_color = Color(0.765425, 0.23695824, 0.4239207, 1)
+text = "HEY BRENDA WHERE THE **** IS THE TURKEY"
+autowrap_mode = 2
+script = ExtResource("2_fj7yv")
+cooldown_max = 0.2
+by_word = true
+
+[node name="commotion_2" type="Label" parent="commotion"]
+visible = false
+texture_filter = 1
+layout_mode = 0
+offset_top = 25.0
+offset_right = 256.0
+offset_bottom = 33.0
+theme = SubResource("Theme_fj7yv")
+theme_override_colors/font_color = Color(1.196419, 0, 0.38591003, 1)
+text = "CALM DOWN YA GEEZER ITS ALMOST READY"
+autowrap_mode = 2
+script = ExtResource("2_fj7yv")
+cooldown_max = 0.25
+by_word = true
+
+[node name="commotion_3" type="Label" parent="commotion/commotion_2" node_paths=PackedStringArray("next_prompt")]
+visible = false
+texture_filter = 1
+layout_mode = 0
+offset_right = 256.0
+offset_bottom = 8.0
+theme = SubResource("Theme_fj7yv")
+theme_override_colors/font_color = Color(1.196419, 0, 0.38591003, 1)
+text = "EVERYONE QUIET! we have a guest"
+autowrap_mode = 2
+script = ExtResource("2_fj7yv")
+cooldown_max = 0.25
+by_word = true
+next_prompt = NodePath(".")
+
 [connection signal="activated" from="textbit/prompt" to="textbit" method="Finnished"]
+[connection signal="activated" from="child/prompt" to="child" method="Finnished"]
+[connection signal="activated" from="narrator_2/prompt" to="narrator_2" method="Finnished"]
