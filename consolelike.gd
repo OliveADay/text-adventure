@@ -7,9 +7,10 @@ var words = []
 var cooldown_current = 0
 var index = 0
 @export var by_word = false
+@export var next_text:Node
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("enter"):
+	if event.is_action_pressed("enter") and visible:
 		index = words.size()
 		text = mainbit
 
@@ -39,16 +40,22 @@ func _ready() -> void:
 	
 
 func _process(delta: float) -> void:
-	if cooldown_current <= 0 and index<words.size():
-		if by_word:
-			text += words[index]+" "
+	if visible:
+		if cooldown_current <= 0 and index<words.size():
+			if by_word:
+				text += words[index]+" "
+			else:
+				text+=words[index]
+			index+=1
+			cooldown_current = cooldown_max
+		elif cooldown_current > 0:
+			cooldown_current -= delta
 		else:
-			text+=words[index]
-		index+=1
-		cooldown_current = cooldown_max
-	elif cooldown_current > 0:
-		cooldown_current -= delta
-	else:
-		$prompt.position.y = size.y
-		$prompt.visible = true
+			$prompt.position.y = size.y
+			$prompt.visible = true
+		
+func Finnished():
+	next_text.visible=true
+	visible = false
+	
 			

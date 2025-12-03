@@ -13,9 +13,9 @@ default_font_size = 8
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 256.0
 offset_bottom = 144.0
-color = Color(0, 0, 0, 1)
+color = Color(0.23468602, 0.19342127, 0.13939087, 1)
 
-[node name="textbit" type="Label" parent="."]
+[node name="textbit" type="Label" parent="." node_paths=PackedStringArray("next_text")]
 texture_filter = 1
 offset_right = 256.0
 offset_bottom = 8.0
@@ -24,6 +24,7 @@ text = "you find yourself in a dark and damp pit, one in which you can only smel
 autowrap_mode = 2
 script = ExtResource("2_fj7yv")
 cooldown_max = 0.03
+next_text = NodePath("../name")
 
 [node name="prompt" type="Label" parent="textbit"]
 visible = false
@@ -43,10 +44,12 @@ texture_filter = 1
 offset_right = 256.0
 offset_bottom = 8.0
 theme = SubResource("Theme_fj7yv")
-text = "you find yourself in a dark and damp pit, one in which you can only smell mold and wet concrete, you hear a large splash, and then a light. "
+theme_override_colors/font_color = Color(0, 0.5888332, 0.1832526, 1)
+text = "oh child how did you get down here? Let me bring you somewhere more cosy 
+"
 autowrap_mode = 2
 script = ExtResource("2_fj7yv")
-cooldown_max = 0.3
+cooldown_max = 0.04
 
 [node name="prompt" type="Label" parent="name"]
 visible = false
@@ -59,3 +62,5 @@ theme = SubResource("Theme_fj7yv")
 text = "Continue: enter "
 autowrap_mode = 2
 script = ExtResource("3_tlwt5")
+
+[connection signal="activated" from="textbit/prompt" to="textbit" method="Finnished"]
