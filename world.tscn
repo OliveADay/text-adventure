@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://chjw2fx4drx5f"]
+[gd_scene load_steps=6 format=3 uid="uid://chjw2fx4drx5f"]
 
+[ext_resource type="Script" uid="uid://bs1vclbj3bf0s" path="res://world.gd" id="1_aqk2v"]
 [ext_resource type="FontFile" uid="uid://dsqnbb1c268fu" path="res://04B_11__.TTF" id="1_f3sb7"]
 [ext_resource type="Script" uid="uid://ctvhqff62lgl4" path="res://consolelike.gd" id="2_fj7yv"]
 [ext_resource type="Script" uid="uid://dm7qoix4ysssx" path="res://prompt_enter.gd" id="3_tlwt5"]
@@ -9,6 +10,7 @@ default_font = ExtResource("1_f3sb7")
 default_font_size = 8
 
 [node name="world" type="Node2D"]
+script = ExtResource("1_aqk2v")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 256.0
@@ -16,7 +18,6 @@ offset_bottom = 144.0
 color = Color(0, 0, 0, 1)
 
 [node name="textbit" type="Label" parent="." node_paths=PackedStringArray("next_text", "next_prompt")]
-visible = false
 texture_filter = 1
 offset_right = 256.0
 offset_bottom = 8.0
@@ -47,15 +48,14 @@ offset_right = 256.0
 offset_bottom = 8.0
 theme = SubResource("Theme_fj7yv")
 theme_override_colors/font_color = Color(0, 0.5888332, 0.1832526, 1)
-text = "oh child how did you get down here? Let me bring you somewhere more cosy 
-"
+text = "oh child how did you get down here? what's your name little one?"
 autowrap_mode = 2
 script = ExtResource("2_fj7yv")
 cooldown_max = 0.04
-next_text = NodePath("../narrator_2")
+next_text = NodePath("../teleport")
 next_prompt = NodePath("prompt")
 
-[node name="prompt" type="Label" parent="child"]
+[node name="prompt" type="Label" parent="child" node_paths=PackedStringArray("textedPrompt")]
 visible = false
 texture_filter = 1
 layout_mode = 0
@@ -63,7 +63,52 @@ offset_top = 25.0
 offset_right = 256.0
 offset_bottom = 33.0
 theme = SubResource("Theme_fj7yv")
-text = "Continue: enter "
+text = "Name: "
+autowrap_mode = 2
+script = ExtResource("3_tlwt5")
+textedPrompt = NodePath("TextEdit")
+is_name = true
+
+[node name="TextEdit" type="TextEdit" parent="child/prompt"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 34.0
+offset_top = 1.0
+offset_right = 83.0
+offset_bottom = 9.0
+theme_override_colors/search_result_color = Color(0.3019608, 0.3019608, 0.3019608, 0)
+theme_override_colors/caret_background_color = Color(0, 0, 0, 0)
+theme_override_colors/selection_color = Color(0.5019608, 0.5019608, 0.5019608, 0)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/line_spacing = -2
+theme_override_fonts/font = ExtResource("1_f3sb7")
+theme_override_font_sizes/font_size = 8
+placeholder_text = "enter "
+backspace_deletes_composite_character_enabled = true
+
+[node name="teleport" type="Label" parent="." node_paths=PackedStringArray("next_text", "next_prompt")]
+visible = false
+texture_filter = 1
+offset_right = 256.0
+offset_bottom = 8.0
+theme = SubResource("Theme_fj7yv")
+theme_override_colors/font_color = Color(0, 0.5888332, 0.1832526, 1)
+text = "ah [name], thats a good name, not one befitting a wet little ragamuffin. I'll take you somewhere more comfortable, prepare yourself because I'm gonna bring you there pretty quickly "
+autowrap_mode = 2
+script = ExtResource("2_fj7yv")
+cooldown_max = 0.04
+next_text = NodePath("../narrator_2")
+next_prompt = NodePath("prompt")
+
+[node name="prompt" type="Label" parent="teleport"]
+visible = false
+texture_filter = 1
+layout_mode = 0
+offset_top = 25.0
+offset_right = 256.0
+offset_bottom = 33.0
+theme = SubResource("Theme_fj7yv")
+text = "Name: "
 autowrap_mode = 2
 script = ExtResource("3_tlwt5")
 
@@ -73,7 +118,7 @@ texture_filter = 1
 offset_right = 256.0
 offset_bottom = 8.0
 theme = SubResource("Theme_fj7yv")
-text = "you are suddenly within a cosy home. You can feel the distant warmth of a fire and smell the warm funk that you associate with your grandparents house. @@@@@@@@@@@@@@There is a commotion going on that you can't entirely make out...@@@@@@@@@"
+text = "you are suddenly within a cosy home. You can feel the distant warmth of a fire and smell the warm funk that you associate with your grandparents house. @@@@@@@@@@@@@@There is a commotion going on that you can't entirely make out...@@@@@@@@@ "
 autowrap_mode = 2
 script = ExtResource("2_fj7yv")
 cooldown_max = 0.03
@@ -92,19 +137,21 @@ text = "Continue: enter "
 autowrap_mode = 2
 script = ExtResource("3_tlwt5")
 
-[node name="commotion" type="Label" parent="."]
+[node name="commotion" type="Label" parent="." node_paths=PackedStringArray("next_prompt")]
+visible = false
 texture_filter = 1
 offset_right = 256.0
 offset_bottom = 8.0
 theme = SubResource("Theme_fj7yv")
 theme_override_colors/font_color = Color(0.765425, 0.23695824, 0.4239207, 1)
-text = "HEY BRENDA WHERE THE **** IS THE TURKEY"
+text = "HEY BRENDA WHERE THE **** IS THE TURKEY @ "
 autowrap_mode = 2
 script = ExtResource("2_fj7yv")
 cooldown_max = 0.2
 by_word = true
+next_prompt = NodePath("commotion_2")
 
-[node name="commotion_2" type="Label" parent="commotion"]
+[node name="commotion_2" type="Label" parent="commotion" node_paths=PackedStringArray("next_prompt")]
 visible = false
 texture_filter = 1
 layout_mode = 0
@@ -113,11 +160,12 @@ offset_right = 256.0
 offset_bottom = 33.0
 theme = SubResource("Theme_fj7yv")
 theme_override_colors/font_color = Color(1.196419, 0, 0.38591003, 1)
-text = "CALM DOWN YA GEEZER ITS ALMOST READY"
+text = "CALM DOWN YA GEEZER ITS ALMOST READY @ "
 autowrap_mode = 2
 script = ExtResource("2_fj7yv")
 cooldown_max = 0.25
 by_word = true
+next_prompt = NodePath("commotion_3")
 
 [node name="commotion_3" type="Label" parent="commotion/commotion_2" node_paths=PackedStringArray("next_prompt")]
 visible = false
@@ -126,14 +174,27 @@ layout_mode = 0
 offset_right = 256.0
 offset_bottom = 8.0
 theme = SubResource("Theme_fj7yv")
-theme_override_colors/font_color = Color(1.196419, 0, 0.38591003, 1)
-text = "EVERYONE QUIET! we have a guest"
+theme_override_colors/font_color = Color(0, 0.5882353, 0.18431373, 1)
+text = "EVERYONE QUIET! we have a guest @ "
 autowrap_mode = 2
 script = ExtResource("2_fj7yv")
 cooldown_max = 0.25
 by_word = true
-next_prompt = NodePath(".")
+next_prompt = NodePath("prompt")
+
+[node name="prompt" type="Label" parent="commotion/commotion_2/commotion_3"]
+visible = false
+texture_filter = 1
+layout_mode = 0
+offset_top = 25.0
+offset_right = 256.0
+offset_bottom = 33.0
+theme = SubResource("Theme_fj7yv")
+text = "Continue: enter "
+autowrap_mode = 2
+script = ExtResource("3_tlwt5")
 
 [connection signal="activated" from="textbit/prompt" to="textbit" method="Finnished"]
 [connection signal="activated" from="child/prompt" to="child" method="Finnished"]
+[connection signal="activated" from="teleport/prompt" to="teleport" method="Finnished"]
 [connection signal="activated" from="narrator_2/prompt" to="narrator_2" method="Finnished"]

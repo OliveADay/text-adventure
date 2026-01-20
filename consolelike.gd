@@ -9,6 +9,7 @@ var index = 0
 @export var by_word = false
 @export var next_text:Node
 @export var next_prompt:Node
+const SAVE_FILE_PATH = "user://save.cfg"
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("enter") and visible:
@@ -24,7 +25,7 @@ func seperate_by_spaces(string):
 			inst_words.append(word)
 			word = ""
 		else:
-			word+=char
+			word+=charac
 	return inst_words
 	
 func seperate_by_chars(string):
@@ -38,9 +39,15 @@ func encode(string):
 	for charac in string:
 		if charac != "@":
 			new_string+=charac
+	if load_name() != "":
+		new_string = new_string.replace("[name]",load_name())
 	return new_string
+	
 func _ready() -> void:
-	mainbit = text
+	if load_name() == "":
+		mainbit = text
+	else:
+		mainbit = text.replace("[name]",load_name())
 	text = ""
 	if by_word:
 		words = seperate_by_spaces(mainbit)
@@ -71,6 +78,13 @@ func _process(delta: float) -> void:
 func Finnished():
 	next_text.visible=true
 	visible = false
-	$prompt.visible = false
+	for child in get_children():
+		child.visible = false
+func load_name():
+	var config = ConfigFile.new()
+	var error = config.load(SAVE_FILE_PATH)
+	if error != OK:
+		return ""
+	return config.get_value("main","name")
 	
 			
